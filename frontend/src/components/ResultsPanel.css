@@ -1,0 +1,113 @@
+.results-panel {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  padding: 1rem;
+}
+.results-panel h2 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.result-block {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #27272a;
+}
+.result-block:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.result-block h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  color: #a1a1aa;
+}
+
+.metrics-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  background: #27272a;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.metric-card {
+  display: flex;
+  flex-direction: column;
+}
+.metric-card .label {
+  font-size: 0.7rem;
+  color: #a1a1aa;
+}
+.metric-card .value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e4e4e7;
+}
+.metric-card .value.green { color: #22c55e; }
+.metric-card .value.red { color: #ef4444; }
+
+.metrics-table {
+  width: 100%;
+  font-size: 0.8rem;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+.metrics-table td {
+  padding: 0.2rem 0.5rem 0.2rem 0;
+}
+.metrics-table td:first-child {
+  color: #a1a1aa;
+}
+.metrics-table td:last-child {
+  text-align: right;
+  font-family: monospace;
+}
+.run-path {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.75rem;
+  color: #71717a;
+}
+.run-path code {
+  word-break: break-all;
+}
+
+.trades-list h4 {
+  margin: 0.5rem 0;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+}
+.trades-table {
+  width: 100%;
+  font-size: 0.75rem;
+  border-collapse: collapse;
+}
+.trades-table th {
+  text-align: left;
+  color: #71717a;
+  font-weight: normal;
+  padding-bottom: 0.25rem;
+}
+.trades-table td {
+  padding: 0.25rem 0;
+  vertical-align: top;
+  border-top: 1px solid #27272a;
+}
+.trades-table .price {
+  color: #71717a;
+  font-size: 0.7rem;
+}
+.trades-table .green {
+  color: #22c55e;
+}
+.trades-table .red {
+  color: #ef4444;
+}
+.trades-table .pct {
+  font-size: 0.7rem;
+  color: #71717a;
+}

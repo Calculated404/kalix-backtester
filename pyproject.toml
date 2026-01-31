@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kalix-backtester"
+version = "0.1.0"
+description = "EUR/CHF backtester with mean reversion and trend-following strategies"
+requires-python = ">=3.11"
+dependencies = [
+    "python-dateutil>=2.9.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "yfinance>=0.2.36",
+    "backtesting>=0.4.0",
+    "Flask>=3.0.0",
+    "Flask-CORS>=4.0.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["backend"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"

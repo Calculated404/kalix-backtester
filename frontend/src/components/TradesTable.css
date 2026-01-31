@@ -1,0 +1,158 @@
+.trades-table-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #27272a;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.trades-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.trades-table-container h3 {
+  margin: 0;
+  color: #f4f4f5;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  flex: 1;
+}
+
+.trades-count-badge {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+
+.metrics-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #3f3f46;
+}
+
+.metric-card {
+  background: #18181b;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 3px solid #3b82f6;
+}
+
+.metric-card .label {
+  display: block;
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-card .value {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #f4f4f5;
+}
+
+.metric-card .value.green {
+  color: #22c55e;
+}
+
+.metric-card .value.red {
+  color: #ef4444;
+}
+
+.trades-table-wrapper {
+  overflow-x: auto;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.trades-table-detailed {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.trades-table-detailed thead {
+  position: sticky;
+  top: 0;
+  background: #18181b;
+  z-index: 10;
+}
+
+.trades-table-detailed th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #a1a1aa;
+  border-bottom: 2px solid #3f3f46;
+  white-space: nowrap;
+}
+
+.trades-table-detailed tbody tr {
+  border-bottom: 1px solid #3f3f46;
+  transition: background-color 0.2s;
+}
+
+.trades-table-detailed tbody tr:hover {
+  background: #3f3f46;
+}
+
+.trades-table-detailed tbody tr.profit {
+  border-left: 3px solid #22c55e;
+}
+
+.trades-table-detailed tbody tr.loss {
+  border-left: 3px solid #ef4444;
+}
+
+.trades-table-detailed td {
+  padding: 0.75rem 1rem;
+  color: #e4e4e7;
+  white-space: nowrap;
+}
+
+.trades-table-detailed td:first-child {
+  color: #a1a1aa;
+  font-weight: 500;
+}
+
+.trades-table-detailed .green {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.trades-table-detailed .red {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .trades-table-container {
+    padding: 1rem;
+  }
+
+  .trades-table-detailed {
+    font-size: 0.8rem;
+  }
+
+  .trades-table-detailed th,
+  .trades-table-detailed td {
+    padding: 0.5rem;
+  }
+}
