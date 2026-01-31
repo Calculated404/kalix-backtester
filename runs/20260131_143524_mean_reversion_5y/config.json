@@ -1,0 +1,12 @@
+{
+  "ticker": "EURCHF=X",
+  "interval": "1d",
+  "period_years": 5,
+  "strategies": [
+    "mean_reversion"
+  ],
+  "initial_cash": 10000.0,
+  "commission": 5e-05,
+  "max_entries_per_week": 2,
+  "cooldown_days": 2
+}
