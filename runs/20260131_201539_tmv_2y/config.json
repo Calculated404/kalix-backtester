@@ -1,0 +1,12 @@
+{
+  "ticker": "NVDA",
+  "interval": "4h",
+  "period_years": 2,
+  "strategies": [
+    "tmv"
+  ],
+  "initial_cash": 10000.0,
+  "commission": 5e-05,
+  "max_entries_per_week": 4,
+  "cooldown_days": 0
+}

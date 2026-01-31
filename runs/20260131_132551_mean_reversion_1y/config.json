@@ -1,0 +1,13 @@
+{
+  "ticker": "GC=F",
+  "interval": "15m",
+  "period_years": 1,
+  "strategies": [
+    "mean_reversion",
+    "trend_following"
+  ],
+  "initial_cash": 10000.0,
+  "commission": 5e-05,
+  "max_entries_per_week": 4,
+  "cooldown_days": 10
+}

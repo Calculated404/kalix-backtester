@@ -160,6 +160,18 @@ export default function Chart({ data = [], markers = [], indicators = {}, height
       entry: 'Close > SMA200 AND SMA50 > SMA200 AND MACD histogram > 0',
       exit: 'Close < SMA50 OR MACD histogram < 0',
     },
+    trend_momentum_volume: {
+      name: 'Trend + Momentum + Volume (TMV)',
+      rules: 'Smoothed Heikin Ashi (30/5) + Range Filter (50, 2.5x) + Volume SMA(20)',
+      entry: 'LONG: HA Bullish + Range Filter BUY + Volume > Avg | SHORT: HA Bearish + Range Filter SELL + Volume > Avg',
+      exit: 'Trend reverses OR Range Filter flips OR 2:1 Stop/Target (1.5x/3.0x ATR)',
+    },
+    double_rsi: {
+      name: 'Double RSI Strategy',
+      rules: 'Trend RSI(21) + Signal RSI(7) - Dual timeframe approach',
+      entry: 'Trend RSI > 60 (Bullish) AND Signal RSI crosses above 40',
+      exit: 'Trend RSI < 40 OR Signal RSI crosses below 60 OR Stop/Target',
+    },
   };
 
   if (!data.length) {

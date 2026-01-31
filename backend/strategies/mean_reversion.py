@@ -10,7 +10,17 @@ from backend.strategies.indicators import atr, bollinger_bands, rsi
 
 @register("mean_reversion")
 class MeanReversionStrategy(Strategy):
-    """Bollinger + RSI bounce. Entry: Close <= LowerBand and RSI < rsi_low. Exit: Close >= MiddleBand or RSI > rsi_exit."""
+    """Mean Reversion Strategy.
+    
+    Rules: Bollinger Bands (period=20, std=2.0) + RSI (period=14, threshold=30) regime filter
+    
+    Entry: Price ≤ Lower Band AND RSI < 30
+    
+    Exit: Price ≥ Middle Band OR RSI > 50
+    
+    Bollinger + RSI bounce. Entry: Close <= LowerBand and RSI < rsi_low. 
+    Exit: Close >= MiddleBand or RSI > rsi_exit.
+    """
 
     rsi_period = 14
     rsi_low = 30

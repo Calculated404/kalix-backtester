@@ -10,11 +10,11 @@ function App() {
   const [chartData, setChartData] = useState([]);
   const [periodYears, setPeriodYears] = useState(5);
   const [ticker, setTicker] = useState('EURCHF=X');
-  const [interval, setInterval] = useState('1d');
+  const [interval, setInterval] = useState('1h');
   const [runResults, setRunResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const prevIntervalRef = useRef('1d');
+  const prevIntervalRef = useRef('1h');
 
   useEffect(() => {
     getStrategies()

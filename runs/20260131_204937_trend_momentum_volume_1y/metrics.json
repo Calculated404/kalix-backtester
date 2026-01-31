@@ -1,0 +1,12 @@
+{
+  "start_cash": 10000.0,
+  "final_equity": 9398.68,
+  "net_profit": -601.32,
+  "win_rate_pct": 30.77,
+  "total_return_pct": -6.01,
+  "max_drawdown_pct": -7.54,
+  "num_trades": 104,
+  "avg_trades_per_week": 2.0,
+  "profit_factor": 0.53,
+  "expectancy_per_trade": -5.7819
+}

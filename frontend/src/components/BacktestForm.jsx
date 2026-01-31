@@ -26,6 +26,14 @@ const TICKER_OPTIONS = [
   { label: 'Apple', value: 'AAPL' },
 ];
 
+// Strategy display names
+const STRATEGY_NAMES = {
+  'trend_momentum_volume': 'Trend + Momentum + Volume (TMV)',
+  'mean_reversion': 'Mean Reversion',
+  'trend_following': 'Trend Following',
+  'double_rsi': 'Double RSI'
+};
+
 const VALID_INTERVALS = [
   { label: '1 Minute (last 5 days)', value: '1m' },
   { label: '15 Minutes (last 60 days)', value: '15m' },
@@ -48,7 +56,7 @@ export default function BacktestForm({
   const [initialCash, setInitialCash] = useState(10000);
   const [commission, setCommission] = useState(0.00005);
   const [selectedStrategies, setSelectedStrategies] = useState(
-    strategies.length ? [strategies[0]] : ['mean_reversion']
+    strategies.length ? [strategies.includes('trend_momentum_volume') ? 'trend_momentum_volume' : strategies[0]] : ['trend_momentum_volume']
   );
   const [maxEntriesPerWeek, setMaxEntriesPerWeek] = useState(2);
   const [cooldownDays, setCooldownDays] = useState(2);
@@ -73,7 +81,7 @@ export default function BacktestForm({
       ticker,
       interval,
       periodYears,
-      strategies: selectedStrategies.length ? selectedStrategies : ['mean_reversion'],
+      strategies: selectedStrategies.length ? selectedStrategies : ['trend_momentum_volume'],
       initialCash,
       commission,
       maxEntriesPerWeek,
@@ -154,17 +162,17 @@ export default function BacktestForm({
                     checked={selectedStrategies.includes(s)}
                     onChange={() => toggleStrategy(s)}
                   />
-                  {s.replace(/_/g, ' ')}
+                  {STRATEGY_NAMES[s] || s.replace(/_/g, ' ')}
                 </label>
               ))
             : (
                 <label className="checkbox">
                   <input
                     type="checkbox"
-                    checked={selectedStrategies.includes('mean_reversion')}
-                    onChange={() => toggleStrategy('mean_reversion')}
+                    checked={selectedStrategies.includes('trend_momentum_volume')}
+                    onChange={() => toggleStrategy('trend_momentum_volume')}
                   />
-                  mean_reversion
+                  Trend + Momentum + Volume (TMV)
                 </label>
               )}
         </div>

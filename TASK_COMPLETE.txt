@@ -1,0 +1,143 @@
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                     │
+│  ✅  IMPLEMENTATION COMPLETE: Double RSI + TMV Strategies           │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+TASK SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Added two new trading strategies to the Kalix Backtester:
+  1. Double RSI - Dual-timeframe RSI strategy  
+  2. TMV - Trend + Momentum + Volume strategy
+
+Both strategies were ported from the Sentinel indicators and adapted for 
+the backtester's pandas-based architecture.
+
+
+FILES CREATED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Strategy Implementations:
+  📄 backend/strategies/double_rsi_strategy.py     (175 lines)
+  📄 backend/strategies/tmv_strategy.py            (196 lines)
+
+Documentation:
+  📄 kalix-backtester/NEW_STRATEGIES_GUIDE.md      (comprehensive guide)
+  📄 kalix-backtester/IMPLEMENTATION_SUMMARY.md    (technical summary)
+
+
+FILES MODIFIED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  📝 backend/strategies/indicators.py              (+140 lines)
+     → Added: double_rsi(), ema(), heikin_ashi(),
+              smoothed_heikin_ashi(), range_filter()
+
+  📝 backend/strategies/__init__.py                (+2 imports)
+     → Exported: DoubleRSIStrategy, TMVStrategy
+
+  📝 kalix-backtester/README.md                    (updated)
+     → Added strategy descriptions and usage examples
+
+
+VERIFICATION RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Strategy Registration
+   Registered strategies: ['double_rsi', 'mean_reversion', 'tmv', 'trend_following']
+
+✅ Strategy Loading
+   Double RSI: DoubleRSIStrategy loaded successfully
+   TMV: TMVStrategy loaded successfully
+
+✅ Indicator Functions
+   • double_rsi()            ✓ Working
+   • ema()                   ✓ Working  
+   • heikin_ashi()           ✓ Working
+   • smoothed_heikin_ashi()  ✓ Working
+   • range_filter()          ✓ Working
+
+✅ End-to-End Backtest
+   Double RSI: Backtest completed (0 trades on synthetic data)
+   TMV: Backtest completed (3 trades, 100% win rate, 5.58% return)
+
+✅ Code Quality
+   No linter errors found
+
+✅ API Integration
+   Strategies appear in GET /api/strategies
+   Compatible with POST /api/run
+   Frontend dynamically loads and displays them
+
+
+STRATEGY DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. DOUBLE RSI
+   ───────────
+   Source:      sentinel/indicators/double_rsi.py
+   Entry:       Trend RSI > 60 (bullish) + Signal RSI cross above 40
+   Exit:        Trend bias changes OR Signal RSI cross below 60
+   Parameters:  trend_rsi_period=21, signal_rsi_period=7
+   Risk Mgmt:   ATR-based stops (2x) and targets (3x)
+   Best for:    Trending markets with shorter-TF mean reversion
+
+2. TMV (Trend + Momentum + Volume)
+   ────────────────────────────────
+   Source:      sentinel/indicators/tmv.py
+   Entry:       ALL three must align:
+                • Smoothed Heikin Ashi bullish (green)
+                • Range Filter buy signal
+                • Volume > 30-period SMA
+   Exit:        Trend bearish OR Range Filter sell
+   Parameters:  ha_period=50, ha_smoothing=10, range_period=100
+   Risk Mgmt:   ATR-based stops (2x) and targets (3x)
+   Best for:    Strong trends with volume confirmation
+
+
+HOW TO USE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Via Frontend:
+  1. Start: python run_app.py
+  2. Open: http://localhost:5003
+  3. Check: "double_rsi" and/or "tmv" in Strategy selector
+  4. Click: "Run backtest"
+
+Via API:
+  curl -X POST http://localhost:5003/api/run \
+    -H "Content-Type: application/json" \
+    -d '{"strategies": ["double_rsi", "tmv"], "period_years": 5}'
+
+Via Python:
+  from backend.strategies import get_strategy_class
+  Strategy = get_strategy_class('double_rsi')
+  # Use with Backtest() class
+
+
+INTEGRATION STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Backend API          (Dynamic registry auto-includes new strategies)
+✅ Frontend UI           (Fetches strategies from API dynamically)
+✅ CLI Tool              (Can run with --strategy double_rsi or tmv)
+✅ Report Endpoint       (POST /api/report supports both strategies)
+✅ Documentation         (README updated, guides created)
+✅ Testing               (Verification tests passed)
+
+
+WHAT'S NEXT (OPTIONAL)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+□ Backtest on real market data (various tickers/timeframes)
+□ Parameter optimization (grid search)
+□ Compare performance vs Mean Reversion/Trend Following
+□ Add short selling support (currently long-only)
+□ Integrate with live AI trader
+□ Multi-timeframe data support (for true dual-TF Double RSI)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                         🎉 READY TO USE! 🎉
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

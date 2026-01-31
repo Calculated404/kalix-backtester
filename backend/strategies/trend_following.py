@@ -10,7 +10,17 @@ from backend.strategies.indicators import atr, macd, sma
 
 @register("trend_following")
 class TrendFollowingStrategy(Strategy):
-    """Long when Close > SMA200, SMA50 > SMA200, MACD hist > 0, SMA50 slope > 0. Exit: Close < SMA50 or MACD hist < 0."""
+    """Trend Following Strategy.
+    
+    Rules: SMA Crossover (50/200) + MACD confirmation
+    
+    Entry: Close > SMA200 AND SMA50 > SMA200 AND MACD histogram > 0 AND SMA50 slope positive
+    
+    Exit: Close < SMA50 OR MACD histogram < 0
+    
+    Long when Close > SMA200, SMA50 > SMA200, MACD hist > 0, SMA50 slope > 0. 
+    Exit: Close < SMA50 or MACD hist < 0.
+    """
 
     sma_fast = 50
     sma_slow = 200

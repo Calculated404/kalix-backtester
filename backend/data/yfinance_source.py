@@ -109,6 +109,54 @@ def normalize_ohlcv(df: pd.DataFrame) -> pd.DataFrame:
         if col not in df.columns:
             raise ValueError(f"Missing column: {col}")
         out[col] = df[col].astype(float)
-    out["Volume"] = df["Volume"].astype(float) if "Volume" in df.columns else 0.0
+    
+    # Handle Volume
+    if "Volume" in df.columns and df["Volume"].sum() > 0:
+        out["Volume"] = df["Volume"].astype(float)
+    else:
+        # Volume is missing or all zeros (Forex pairs) - generate synthetic volume
+        LOG.warning("Volume data missing or all zeros. Generating synthetic volume based on price volatility.")
+        out["Volume"] = generate_synthetic_volume(out)
+    
     out = out.loc[~out["Close"].isna()]
     return out
+
+
+def generate_synthetic_volume(df: pd.DataFrame) -> pd.Series:
+    """Generate synthetic volume based on price volatility for Forex pairs.
+    
+    Uses ATR (Average True Range) as a proxy for trading activity.
+    Higher volatility periods tend to have higher volume.
+    """
+    # Calculate True Range
+    high_low = df["High"] - df["Low"]
+    high_close = (df["High"] - df["Close"].shift(1)).abs()
+    low_close = (df["Low"] - df["Close"].shift(1)).abs()
+    
+    true_range = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
+    
+    # Calculate ATR (14 periods)
+    atr = true_range.rolling(window=14, min_periods=1).mean()
+    
+    # Normalize to reasonable volume range (1000 - 100000)
+    # Scale based on ATR percentile
+    min_vol = 1000
+    max_vol = 100000
+    
+    atr_min = atr.quantile(0.01)
+    atr_max = atr.quantile(0.99)
+    
+    if atr_max > atr_min:
+        synthetic_volume = min_vol + (atr - atr_min) / (atr_max - atr_min) * (max_vol - min_vol)
+        synthetic_volume = synthetic_volume.clip(min_vol, max_vol)
+    else:
+        # If ATR is constant, use midpoint
+        synthetic_volume = pd.Series((min_vol + max_vol) / 2, index=df.index)
+    
+    # Add some randomness to make it look more natural
+    import numpy as np
+    noise = np.random.normal(1.0, 0.1, len(synthetic_volume))
+    synthetic_volume = synthetic_volume * noise
+    synthetic_volume = synthetic_volume.clip(min_vol, max_vol)
+    
+    return synthetic_volume.fillna(min_vol)

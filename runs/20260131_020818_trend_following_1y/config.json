@@ -1,0 +1,12 @@
+{
+  "ticker": "SI=F",
+  "interval": "1d",
+  "period_years": 1,
+  "strategies": [
+    "trend_following"
+  ],
+  "initial_cash": 10000.0,
+  "commission": 5e-05,
+  "max_entries_per_week": 2,
+  "cooldown_days": 2
+}
